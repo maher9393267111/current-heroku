@@ -1,12 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
-
+import {useState, useEffect} from 'react';
+import Home from './pages/home/index';
 function App() {
+
+
+
   return (
     <div className="App">
       
 
-      <h1>Hello heroku im maher first react  maher  grewat maaaan </h1>
+
+
+<div>
+
+<Home/>
+
+</div>
+
+
+
+
+
     </div>
   );
 }
