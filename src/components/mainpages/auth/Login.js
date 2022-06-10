@@ -43,7 +43,7 @@ localStorage.setItem('token',res.data.accesstoken)
 
    
 
-      //   window.location.href = "/";
+        window.location.href = "/";
     } catch (err) {
         console.log(err)
      // alert(err?.response?.data?.msg);

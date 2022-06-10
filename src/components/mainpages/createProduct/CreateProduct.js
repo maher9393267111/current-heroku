@@ -19,6 +19,7 @@ function CreateProduct() {
     const [product, setProduct] = useState(initialState)
     const [categories] = state.categoriesAPI.categories
     const [images, setImages] = useState(false)
+    const [arrimages, setArrimages] = useState([])
     const [loading, setLoading] = useState(false)
 
 
@@ -38,13 +39,13 @@ function CreateProduct() {
             products.forEach(product => {
                 if(product._id === param.id) {
                     setProduct(product)
-                    setImages(product.images)
+                  //  setImagescond(product.images)
                 }
             })
         }else{
             setOnEdit(false)
             setProduct(initialState)
-            setImages(false)
+           // setImagescond(false)
         }
     }, [param.id, products])
 
@@ -52,23 +53,43 @@ function CreateProduct() {
         e.preventDefault()
         try {
             if(!isAdmin) return alert("You're not an admin")
-            const file = e.target.files[0]
+       
+         //----------------------------
+
+
+
+         let reader = new FileReader();
+         let files = e.target.files;
+         console.log('files', files)
+         for (let i = 0; i < files.length; i++) {
+           reader.readAsDataURL(files[i]);
+           reader.onload = () => {
+             // setImages({
+             //   ...images,
+             //   [files[i].name]: reader.result
+             // });
+       
+             setArrimages([...images, reader.result]);
+             console.log('images', images)
             
-            if(!file) return alert("File not exist.")
+           }
+         }
+       
 
-            if(file.size > 1024 * 1024) // 1mb
-                return alert("Size too large!")
+         console.log('images', arrimages)
+       
 
-            if(file.type !== 'image/jpeg' && file.type !== 'image/png') // 1mb
-                return alert("File format is incorrect.")
 
-            let formData = new FormData()
-            formData.append('file', file)
+
+
+         //----------------------------
+
+
+
 
             setLoading(true)
-            const res = await axios.post('/api/upload', formData, {
-                headers: {'content-type': 'multipart/form-data', Authorization: token}
-            })
+            const res = await axios.post('/api/upload', 
+            {arrimages} )
             setLoading(false)
             setImages(res.data)
 
@@ -124,7 +145,7 @@ function CreateProduct() {
     return (
         <div className="create_product">
             <div className="upload">
-                <input type="file" name="file" id="file_up" onChange={handleUpload}/>
+                <input type="file" name="file" id="file_up"   onChange={handleUpload}/>
                 {
                     loading ? <div id="file_img"><Loading /></div>
 
