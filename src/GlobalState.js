@@ -24,22 +24,30 @@ const axiosurl = axios.create({
 const firstLogin =  localStorage.getItem('firstLogin') ? localStorage.getItem('firstLogin') : false 
     
     useEffect(() =>{
-        const firstLogin = localStorage.getItem('firstLogin')
-        console.log('first login ---->',firstLogin)
-        if(firstLogin){
-            console.log('first login work')
-            const refreshToken = async () =>{
-                const res = await axios.get(`/user/refresh_token`)
-        console.log('resssssssssssss' ,res.data.accesstoken)
-                setToken(res.data.accesstoken)
-                console.log(token ,'-----------------token refresh data')
+        // const firstLogin = localStorage.getItem('firstLogin')
+        // console.log('first login ---->',firstLogin)
+        // if(firstLogin){
+        //     console.log('first login work')
+        //     const refreshToken = async () =>{
+        //         const res = await axios.get(`/user/refresh_token`)
+        // console.log('resssssssssssss' ,res.data.accesstoken)
+        //         setToken(res.data.accesstoken)
+        //         console.log(token ,'-----------------token refresh data')
     
-                setTimeout(() => {
-                    refreshToken()
-                }, 10 * 60 * 1000)
-            }
-            refreshToken()
-        }
+        //         setTimeout(() => {
+        //             refreshToken()
+        //         }, 10 * 60 * 1000)
+        //     }
+        //     refreshToken()
+        // }
+
+
+if(localStorage.getItem('token')){
+
+
+    setToken(localStorage.getItem('token'))
+}
+
     },[])
 
 

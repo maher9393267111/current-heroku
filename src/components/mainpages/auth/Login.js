@@ -14,7 +14,8 @@ function Login() {
   const state = useContext(GlobalState);
   
   // check token and setToken from GlobalState
-const [token] = state.token
+const [token,setToken] = state.token
+const [userRole] = state.userAPI.userRole
 
 
   const [responsedata, setreponsedata] = useState("");
@@ -31,14 +32,14 @@ const [token] = state.token
 
       const res = await axios.post(`/user/login`, { ...user });
 
+setToken(res.data.accesstoken)
+localStorage.setItem('token',res.data.accesstoken)
+
+
       localStorage.setItem("firstLogin", true);
       
 
-      // ${API_URL}
-    //   const resrefreshToken = await axios.get(`user/refresh_token`);
 
-    //  // setToken(resrefreshToken.data.accesstoken);
-    //   console.log(token, "token refresh data");
 
    
 
@@ -51,7 +52,7 @@ const [token] = state.token
 
   return (
     <div className="login-page">
-        {token}
+        {userRole}
       <form onSubmit={loginSubmit}>
         <h2>Login</h2>
         <input
